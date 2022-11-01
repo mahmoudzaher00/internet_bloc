@@ -11,7 +11,17 @@ class HomePageBloc extends StatelessWidget {
       appBar: AppBar(),
       body: Center(
         //TODO:Bloc
-        child: BlocBuilder<InternetBloc, InternetState>(
+        child: BlocConsumer<InternetBloc, InternetState>(
+          listener: (context, state){
+            if (state is InternetNotConnectedState){
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                    content: Text(state.message),
+                    backgroundColor: Colors.red,
+                )
+              );
+            }
+          },
           builder: (context, state) {
             if(state is InternetConnectedState){
               return Text(state.message);
